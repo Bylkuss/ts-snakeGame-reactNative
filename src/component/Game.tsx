@@ -1,7 +1,7 @@
 
 import * as React from "react";
 
-import { SafeAreaView, StyleSheet, View } from "react-native";
+import { Button, SafeAreaView, StyleSheet, View } from "react-native";
 import { Colors } from "../styles/colors";
 import { GestureEvent, PanGestureHandler } from "react-native-gesture-handler";
 import { Coordinate, Direction, GestureEventType } from "../types/GestureEventType";
@@ -16,15 +16,15 @@ const SCORE_INCREMENT = 10;
 export default function Game(): JSX.Element {
     const [direction, setDirection] = React.useState<Direction>(Direction.Right);
     const [snake, setSnake] = React.useState<Coordinate[]>(SNAKE_INITIAL_POSITION);
-    const [food, setFood] = React.useState<Coordinate[]>(FOOD_INITIAL_POSITION);
+    // const [food, setFood] = React.useState<Coordinate[]>(FOOD_INITIAL_POSITION);
     const [isGameOver, setIsGameOver] = React.useState<boolean>(false);
     const [isPaused, setIsPaused] = React.useState<boolean>(false);
-
+    
     const HandleGesture = (event: GestureEventType) => {
         // console.log("Eventsss", event);
         const { translationX, translationY } = event.nativeEvent;
         console.log("X: ", translationX, "Y: ", translationY);
-
+        
         if (Math.abs(translationX) > Math.abs(translationY)) {
             // moving on X axe
             if (translationX > 0) {
@@ -42,27 +42,36 @@ export default function Game(): JSX.Element {
             else {
                 setDirection(Direction.Up);
             }
-
-
+            console.log("Snake: ", snake)
         }
     };
 
-    return (
-        <PanGestureHandler onGestureEvent={HandleGesture}>
-            <SafeAreaView style={styles.container}>
-                <View style={styles.boundaries} >
-                    <Snake snake={snake} />
-                </View>
-            </SafeAreaView>
-        </PanGestureHandler>
-    );
+//     return (
+//         <PanGestureHandler onGestureEvent={HandleGesture}>
+//             <SafeAreaView style={styles.container}>
+//                 <View  style={styles.boundaries} >
+//                     <Snake snake={snake} />
+//                 </View>
+//             </SafeAreaView>
+//         </PanGestureHandler>
+//     );
+// }
+return (
+    <PanGestureHandler onGestureEvent={HandleGesture}>
+      <SafeAreaView style={styles.container}>
+        <View style={styles.boundaries}>
+          <Snake snake={snake} />
+        </View>
+      </SafeAreaView>
+    </PanGestureHandler>
+  );
 }
 
 const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: Colors.primary,
-        secondaryColor: Colors.secondary,
+        // secondaryColor: Colors.secondary,
     },
     boundaries: {
         borderColor: Colors.primary,
